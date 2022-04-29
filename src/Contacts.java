@@ -1,18 +1,6 @@
 class Contacts {
 
     private String firstName, lastName, address, city, state, zipCode, contactNo, email;
-    public Contacts(String fName, String lName,
-                    String addr, String cityName, String stateName,
-                    String zipCodeNo, String contact, String emailAddr){
-        this.firstName = fName;
-        this.lastName = lName;
-        this.address = addr;
-        this.city = cityName;
-        this.state = stateName;
-        this.zipCode = zipCodeNo;
-        this.contactNo = contact;
-        this.email = emailAddr;
-    }
     public String getFirstName(){
         return firstName;
     }
@@ -61,5 +49,10 @@ class Contacts {
     }
     public void setZipCode(String zipCode){
         this.zipCode = zipCode;
+    }
+    public String toString(){
+        return ("FirstName IS " + firstName + " \n LastNAme Is " + lastName + " \n Email Is " + email +
+                "\n Contact No Is " + contactNo + "\n Address Is " + address + " \n City Is " + city + "\n State Is " + state +
+                "\n Zip Code Is " + zipCode);
     }
 }
