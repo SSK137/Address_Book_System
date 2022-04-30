@@ -32,7 +32,10 @@ public class AddressBooksystem {
         }
     }
 
-    public void editDetails(String FirstNameSearch) {
+    public void editDetails() {
+        System.out.println("Enter First Name to edit ");
+        String FirstNameSearch = scanner.next();
+       
         for (Contacts contacts : contactsDetails) {
             System.out.println("First Name " + contacts.getFirstName());
             if (contacts.getFirstName().equals(FirstNameSearch)) {
@@ -81,29 +84,32 @@ public class AddressBooksystem {
                         String UpdateZipCode = scanner.next();
                         contacts.setZipCode(UpdateZipCode);
                     }
-                    default -> System.out.println("Enter Correct No");
                 }
             } else {
                 System.out.println("Enter Correct Name");
             }
+            System.out.println("Updated Details: ");
+            DisplayDetails();
         }
     }
 
+    public void deleteContact(){
+        Iterator<Contacts> removeContact = contactsDetails.iterator();
 
+        while (removeContact.hasNext()){
+            Contacts nextElement = removeContact.next();
+            removeContact.remove();
+        }
+        System.out.println("Contact is removed!");
+        DisplayDetails();
+    }
     public static void main(String[] args) {
         System.out.println("Welcome to Address Book Program!");
 
         AddressBooksystem addressbooksystem = new AddressBooksystem();
-
-
-        System.out.println("-----------------------------*****-------------------------");
-
         addressbooksystem.addDetails();
         addressbooksystem.DisplayDetails();
-        System.out.println("Enter First Name for which you want to modify info: ");
-        String fName = scanner.nextLine();
-        addressbooksystem.editDetails(fName);
-        System.out.println("After Edit Details Are");
-        addressbooksystem.DisplayDetails();
+        addressbooksystem.editDetails();
+        addressbooksystem.deleteContact();
     }
 }
