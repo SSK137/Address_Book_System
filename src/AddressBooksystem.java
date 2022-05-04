@@ -1,54 +1,58 @@
 import java.util.*;
 public class AddressBooksystem {
-
     static ArrayList<Contacts> contactsDetails = new ArrayList();
+    //static HashMap<String, Object> AddressBook = new HashMap<>();
     static Scanner scanner = new Scanner(System.in);
     static Contacts contacts = new Contacts();
+    static int counter;
 
     public void addDetails() {
-
+        Contacts contacts = new Contacts();
         System.out.println("Enter First Name");
-        contacts.setFirstName(scanner.nextLine());
+        contacts.setFirstName(scanner.next());
         System.out.println("Enter last Name");
-        contacts.setLastName(scanner.nextLine());
+        contacts.setLastName(scanner.next());
         System.out.println("Enter Email");
-        contacts.setEmail(scanner.nextLine());
+        contacts.setEmail(scanner.next());
         System.out.println("Enter Address");
-        contacts.setAddress(scanner.nextLine());
+        contacts.setAddress(scanner.next());
         System.out.println("Enter Contact No");
-        contacts.setContactNo(scanner.nextLine());
+        contacts.setContactNo(scanner.next());
         System.out.println("Enter City");
-        contacts.setCity(scanner.nextLine());
+        contacts.setCity(scanner.next());
         System.out.println("Enter State");
-        contacts.setState(scanner.nextLine());
+        contacts.setState(scanner.next());
         System.out.println("Enter Zip Code");
-        contacts.setZipCode(scanner.nextLine());
+        contacts.setZipCode(scanner.next());
         contactsDetails.add(contacts);
+        System.out.println("Contact details added! In Address Book");
     }
 
     public void DisplayDetails() {
         for (Contacts contactsDetail : contactsDetails) {
-            System.out.println(contactsDetail);
+            System.out.println("---------*********--------");
+            System.out.print(contactsDetail + " ");
         }
     }
 
     public void editDetails() {
-        System.out.println("Enter First Name to edit ");
+        System.out.println("Enter First Name ");
         String FirstNameSearch = scanner.next();
-       
+        /* String FirstNameSearch to
+         search for first name */
         for (Contacts contacts : contactsDetails) {
             System.out.println("First Name " + contacts.getFirstName());
             if (contacts.getFirstName().equals(FirstNameSearch)) {
                 System.out.println("Enter a No For Edit the Details");
                 System.out.println("""
-                         1 =  First Name\s
-                         2 = Last Name\s
-                         3 = Email\s
-                         4 = Contact No\s
-                         5 = Address\s
-                         6 = City\s
-                         7 = State\s
-                         8 = Zip Code\s""");
+                        1 =  First Name\s
+                        2 = Last Name\s
+                        3 = Email\s
+                        4 = Contact No\s
+                        5 = Address\s
+                        6 = City\s
+                        7 = State\s
+                        8 = Zip Code\s""");
                 int edit = scanner.nextInt();
                 System.out.println("Enter value For Update");
                 switch (edit) {
@@ -93,9 +97,8 @@ public class AddressBooksystem {
         }
     }
 
-    public void deleteContact(){
+    public void DeleteContact(){
         Iterator<Contacts> removeContact = contactsDetails.iterator();
-
         while (removeContact.hasNext()){
             Contacts nextElement = removeContact.next();
             removeContact.remove();
@@ -103,13 +106,53 @@ public class AddressBooksystem {
         System.out.println("Contact is removed!");
         DisplayDetails();
     }
+
+    public void Option(AddressBooksystem addressBookSystem) {
+        System.out.println("Enter a number to perform action: ");
+        int menu, ans;
+        do {
+            System.out.println(" \n1. Add details \n2. Edit details \n3. Delete details \n4. Display details \n5. Exit");
+            System.out.println("Enter Option");
+            menu = scanner.nextInt();
+            switch (menu) {
+                case 1 ->
+                    /*
+                    Adding Contacts in Address Book.
+                     */
+                        addressBookSystem.addDetails();
+                case 2 ->
+                     /*
+                    Editing the Contacts from Address Book.
+                     */
+                        addressBookSystem.editDetails();
+                case 3 ->
+                     /*
+                    Deleting Contacts from Address Book.
+                     */
+                        addressBookSystem.DeleteContact();
+                case 4 ->
+                     /*
+                    Display Contacts From Address Book.
+                     */
+                        addressBookSystem.DisplayDetails();
+                case 5 -> {
+                    System.out.println("Exiting Code");
+                    System.exit(0);
+                }
+
+                default -> System.out.println("Enter Valid Code");
+            }
+            System.out.println("Do Ypu Want To continue ......If Yes The Press '1' ");
+            ans = scanner.nextInt();
+        } while (ans == 1);
+    }
+
     public static void main(String[] args) {
         System.out.println("Welcome to Address Book Program!");
 
         AddressBooksystem addressbooksystem = new AddressBooksystem();
-        addressbooksystem.addDetails();
-        addressbooksystem.DisplayDetails();
-        addressbooksystem.editDetails();
-        addressbooksystem.deleteContact();
+        System.out.println("-----------------------------*****-------------------------");
+        addressbooksystem.Option(addressbooksystem);
+
     }
 }
