@@ -1,8 +1,8 @@
 import java.util.*;
 import java.lang.*;
+import java.util.stream.Collectors;
 public class AddressBooksystem {
     static ArrayList<Contacts> contactsDetails = new ArrayList();
-    //static HashMap<String, Object> AddressBook = new HashMap<>();
     static Scanner scanner = new Scanner(System.in);
     static Contacts contacts = new Contacts();
     static int counter;
@@ -12,12 +12,11 @@ public class AddressBooksystem {
     public static void AddressBook(AddressBooksystem addressBooksystem) {
         int ans;
         do {
-            System.out.println("Enter Name For Address Book");
+            System.out.println("Enter Name of Address Book");
             String AddressBookName = scanner.next();
 
-            // addressBookSystem.MenuOption(addressBookSystem,contactsDetails);
             if (hashmap.containsKey(AddressBookName)) {
-                System.out.println("The AddressBook already contains");
+                System.out.println("The AddressBook already exist");
                 break;
             } else {
                 ArrayList<Contacts> contactDetails = new ArrayList<>();
@@ -25,37 +24,68 @@ public class AddressBooksystem {
                 hashmap.put(AddressBookName, contactDetails);
             }
             System.out.println("AddressBook Added" + hashmap + " ");
-            System.out.println("Do You Want To Continue the Press 1");
+            System.out.println("Do You Want To add Address Books ? if yes then Enter 1 else Enter 2 for exit");
             ans = scanner.nextInt();
         } while (ans == 1);
-
     }
-    public static ArrayList<Contacts> addDetails(ArrayList<Contacts> contactDetails){
+
+    public static ArrayList<Contacts> addDetails(ArrayList<Contacts> contactDetails) {
         Contacts info = new Contacts();
-        System.out.println("Enter first name: ");
-        info.setFirstName(scanner.next());
-        System.out.println("Enter last name: ");
-        info.setLastName(scanner.next());
-        System.out.println("Enter address: ");
-        info.setAddress(scanner.next());
-        System.out.println("Enter city name: ");
-        info.setCity(scanner.next());
-        System.out.println("Enter state name: ");
-        info.setState(scanner.next());
-        System.out.println("Enter zip code: ");
-        info.setZipCode(scanner.next());
-        System.out.println("Enter contact no.: ");
-        info.setContactNo(scanner.next());
-        System.out.println("Enter email: ");
-        info.setEmail(scanner.next());
-        contactDetails.add(info);
+        if(contactDetails.size() == 0) {
+            System.out.println("Enter First name: ");
+            info.setFirstName(scanner.next());
+            System.out.println("Enter last name: ");
+            info.setLastName(scanner.next());
+            System.out.println("Enter address: ");
+            info.setAddress(scanner.next());
+            System.out.println("Enter city name: ");
+            info.setCity(scanner.next());
+            System.out.println("Enter state name: ");
+            info.setState(scanner.next());
+            System.out.println("Enter zip code: ");
+            info.setZipCode(scanner.next());
+            System.out.println("Enter contact no.: ");
+            info.setContactNo(scanner.next());
+            System.out.println("Enter email: ");
+            info.setEmail(scanner.next());
+            contactDetails.add(info);
+        } else {
+            System.out.println("Enter First Name");
+            String firstname = scanner.next();
+                for (Contacts contact : contactDetails) {
+                    if (contact.getFirstName().equals(firstname)) {
+                        System.out.print("Name already present\n");
+                        AddressBooksystem.addDetails(contactDetails);
+                    }
+                }
+            {
+                info.setFirstName(scanner.next());
+                System.out.println("Enter Last Name");
+                info.setLastName(scanner.next());
+                System.out.println("Enter contact Number:");
+                info.setContactNo(scanner.next());
+                System.out.println("Enter Email: ");
+                info.setEmail(scanner.next());
+                System.out.println("Enter Address: ");
+                info.setAddress(scanner.next());
+                System.out.println("Enter City Name: ");
+                info.setCity(scanner.next());
+                System.out.println("Enter State: ");
+                info.setState(scanner.next());
+                System.out.println("Enetr Zip Code:");
+                info.setZipCode(scanner.next());
+                contactDetails.add(info);
+            }
+        }
         System.out.println("Contact details added!");
         return contactDetails;
     }
-    public static void displayContacts(){
-        System.out.println(Arrays.asList(hashmap));
-    }
 
+    public static void displayContacts(ArrayList<Contacts> contactsDetails){
+        for (Contacts contacts:contactsDetails) {
+            System.out.println(contacts);
+        }
+    }
     public void editDetails(ArrayList<Contacts> contactDetails){
         System.out.println("Enter First Name for which you want to modify info: ");
         String searchFirstName = scanner.next();
@@ -119,10 +149,6 @@ public class AddressBooksystem {
         System.out.println("Enter email for which you want to delete contact: ");
         String searchEmail = scanner.next();
         Iterator<Contacts> removeContact = contactDetails.iterator();
-        /*  Checking the next element where
-         *   condition holds true till there is single element
-         *   in the List using hasNext() method
-         */
         while (removeContact.hasNext()){
             /*  Move cursor to next element */
             Contacts nextElement = removeContact.next();
@@ -158,7 +184,7 @@ public class AddressBooksystem {
                     break;
                 case 4:
                     /*  Display contact details */
-                    addressBooksystem.displayContacts();
+                    addressBooksystem.displayContacts(contactDetails);
                     break;
                 case 5:
                     System.out.println("Exit!");
@@ -167,7 +193,7 @@ public class AddressBooksystem {
                     System.out.println("Invalid option selected.");
                     break;
             }
-            System.out.println("Do Ypu Want To continue ......If Yes The Press '1' ");
+            System.out.println("Do You Want To Perform more opration then Enter 1 else Enter 2");
             ans = scanner.nextInt();
         } while (ans == 1);
     }
