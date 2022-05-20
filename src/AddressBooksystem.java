@@ -47,9 +47,22 @@ public class AddressBooksystem {
                     System.out.println("City Name :"+contacts1.getCity());
                     System.out.println("Contact Number :"+contacts1.getContactNo());
                 }
-            }}
+            }
+        }
         System.out.printf("No record found:");
         return null;
+    }
+    public void SearchInSingleBook(ArrayList<Contacts> contactdetails){
+        System.out.println("Enter name of city or state to search");
+        String name=scanner.next();
+        ArrayList<Contacts> contacts=new ArrayList<>();
+        for (Contacts contact:contactdetails){
+            if(contact.getCity().equals(name)||contact.getState().equals(name))
+            {
+                contacts.add(contact);
+            }
+            System.out.println(contact);
+        }
     }
 
     public static ArrayList<Contacts> addDetails(ArrayList<Contacts> contactDetails) {
@@ -185,7 +198,7 @@ public class AddressBooksystem {
         System.out.println("Enter a number to perform action: ");
         int menu, ans;
         do {
-            System.out.println(" \n1. Add details \n2. Edit details \n3. Delete details \n4. Display details \n5.exit ");
+            System.out.println(" \n1. Add details \n2. Edit details \n3. Delete details \n4. Display details \n5.Search in Perticular Book ");
             System.out.println("Enter Option");
             menu = scanner.nextInt();
             switch (menu) {
@@ -206,7 +219,7 @@ public class AddressBooksystem {
                     addressBooksystem.displayContacts(contactDetails);
                     break;
                 case 5:
-                    System.out.println("exit");
+                    SearchInSingleBook(contactDetails);
                     break;
                 default:
                     System.out.println("Invalid option selected.");
