@@ -63,7 +63,7 @@ public class AddressBooksystem {
         }
         System.out.println("\n Total Count From Same City 0r State in Single Address Book : "+CountFromAllAddressBook);
     }
-    /*----Method For Sort Contacts from address Books----*/
+    /*----Method For Sort Contacts from address Books by Persons Name----*/
     public static void SortByName(HashMap<String, ArrayList<Contacts>> hashmap) {
         for (Map.Entry<String, ArrayList<Contacts>> addressBookMapEntry : hashmap.entrySet()) {
             List<Contacts> sortedContacts = addressBookMapEntry.getValue()
@@ -76,6 +76,7 @@ public class AddressBooksystem {
             }
         }
     }
+    /*----Method For Sort Contacts from address Books by Persons City and state Name----*/
     public static void SortByCityState(HashMap<String, ArrayList<Contacts>> hashmap) {
         for (Map.Entry<String, ArrayList<Contacts>> addressBookMapEntry : hashmap.entrySet()) {
             List<Contacts> sortedContacts = addressBookMapEntry.getValue()
@@ -88,6 +89,7 @@ public class AddressBooksystem {
             }
         }
     }
+    /*----Method For Search Contact in particular address Books those who are belongs to Same City----*/
     public void SearchInSingleBook(ArrayList<Contacts> contactdetails){
         System.out.println("Enter name of city or state to search");
         String name=scanner.next();
@@ -99,7 +101,7 @@ public class AddressBooksystem {
             }
         }
     }
-
+    /*----Method For Add Contact Details in Address Book----*/
     public static ArrayList<Contacts> addDetails(ArrayList<Contacts> contactDetails) {
         Contacts info = new Contacts();
         if(contactDetails.size() == 0) {
@@ -151,12 +153,13 @@ public class AddressBooksystem {
         System.out.println("Contact details added!");
         return contactDetails;
     }
-
+    /*----Method For Display All Contacts available in Address Book----*/
     public static void displayContacts(ArrayList<Contacts> contactsDetails){
         for (Contacts contacts:contactsDetails) {
             System.out.println(contacts);
         }
     }
+    /*----Method For Update the contacts stored in Address Book----*/
     public void editDetails(ArrayList<Contacts> contactDetails){
         System.out.println("Enter First Name for which you want to modify info: ");
         String searchFirstName = scanner.next();
@@ -212,6 +215,7 @@ public class AddressBooksystem {
             }
         }
     }
+    /*----Method For Remove Record From Address Books----*/
     public void deleteContact(ArrayList<Contacts> contactDetails){
         System.out.println("Enter email for which you want to delete contact: ");
         String searchEmail = scanner.next();
@@ -229,6 +233,7 @@ public class AddressBooksystem {
             }
         }
     }
+    /*----Method For Menu Operations to perform----*/
     public void MenuOption(AddressBooksystem addressBooksystem,ArrayList<Contacts> contactDetails ) {
         System.out.println("Enter a number to perform action: ");
         int menu, ans;
