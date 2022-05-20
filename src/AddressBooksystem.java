@@ -1,32 +1,55 @@
 import java.util.*;
 import java.lang.*;
-import java.util.stream.Collectors;
+
 public class AddressBooksystem {
-    static ArrayList<Contacts> contactsDetails = new ArrayList();
+    static ArrayList<String> contactsDetails = new ArrayList();
     static Scanner scanner = new Scanner(System.in);
-    static Contacts contacts = new Contacts();
-    static int counter;
-
-
     static HashMap<String, ArrayList<Contacts>> hashmap = new HashMap<>();
     public static void AddressBook(AddressBooksystem addressBooksystem) {
-        int ans;
-        do {
-            System.out.println("Enter Name of Address Book");
-            String AddressBookName = scanner.next();
+        System.out.println("choice");
+        System.out.println("1) Add Address Book \n2)Search");
+        int ch=scanner.nextInt();
+        switch (ch) {
+            case 1:
+            int ans;
+            do {
+                System.out.println("Enter Name of Address Book");
+                String AddressBookName = scanner.next();
+                contactsDetails.add(AddressBookName);
 
-            if (hashmap.containsKey(AddressBookName)) {
-                System.out.println("The AddressBook already exist");
-                break;
-            } else {
-                ArrayList<Contacts> contactDetails = new ArrayList<>();
-                addressBooksystem.MenuOption(addressBooksystem, contactDetails);
-                hashmap.put(AddressBookName, contactDetails);
-            }
-            System.out.println("AddressBook Added" + hashmap + " ");
-            System.out.println("Do You Want To add Address Books ? if yes then Enter 1 else Enter 2 for exit");
-            ans = scanner.nextInt();
-        } while (ans == 1);
+                if (hashmap.containsKey(AddressBookName)) {
+                    System.out.println("The AddressBook already exist");
+                    break;
+                } else {
+                    ArrayList<Contacts> contactDetails = new ArrayList<>();
+                    addressBooksystem.MenuOption(addressBooksystem, contactDetails);
+                    hashmap.put(AddressBookName, contactDetails);
+                }
+                System.out.println("AddressBook Added" + hashmap + " ");
+                System.out.println("1)Add New Address Book \n2)Search Contact by City or State \n3)Exit");
+                ans = scanner.nextInt();
+            } while (ans == 1);
+            case 2:
+                System.out.println("Enter name to search ");
+                String name=scanner.next();
+                SearchInMultipleBook(name);
+        }
+    }
+    public static List<Contacts> SearchInMultipleBook(String name){
+        for (Map.Entry<String, ArrayList<Contacts>> entry : hashmap.entrySet()){
+            for (Contacts contacts1:entry.getValue()){
+                if (contacts1.getCity().equals(name)|| contacts1.getState().equals(name)){
+                    System.out.println("\nAddress Book Name :"+entry.getKey());
+                    System.out.println("First Name :"+contacts1.getFirstName());
+                    System.out.println("Last Name :"+contacts1.getLastName());
+                    System.out.println("Mail-ID :"+contacts1.getEmail());
+                    System.out.println("Address :"+contacts1.getAddress());
+                    System.out.println("City Name :"+contacts1.getCity());
+                    System.out.println("Contact Number :"+contacts1.getContactNo());
+                }
+            }}
+        System.out.printf("No record found:");
+        return null;
     }
 
     public static ArrayList<Contacts> addDetails(ArrayList<Contacts> contactDetails) {
@@ -59,7 +82,7 @@ public class AddressBooksystem {
                     }
                 }
             {
-                info.setFirstName(scanner.next());
+                info.setFirstName(firstname);
                 System.out.println("Enter Last Name");
                 info.setLastName(scanner.next());
                 System.out.println("Enter contact Number:");
@@ -91,10 +114,6 @@ public class AddressBooksystem {
         String searchFirstName = scanner.next();
         /*  Iterate to search for first name */
         for (Contacts contact : contactDetails) {
-            /*  compare first name
-             *   if matches display menu for edit
-             *   else display no record found message
-             */
             if (contact.getFirstName().equals(searchFirstName)){
                 System.out.println("Enter the number to edit respective info: ");
                 System.out.println("1. First Name \n2. Last Name \n3. Address \n4. City " +
@@ -166,7 +185,7 @@ public class AddressBooksystem {
         System.out.println("Enter a number to perform action: ");
         int menu, ans;
         do {
-            System.out.println(" \n1. Add details \n2. Edit details \n3. Delete details \n4. Display details \n5. Exit");
+            System.out.println(" \n1. Add details \n2. Edit details \n3. Delete details \n4. Display details \n5.exit ");
             System.out.println("Enter Option");
             menu = scanner.nextInt();
             switch (menu) {
@@ -187,7 +206,7 @@ public class AddressBooksystem {
                     addressBooksystem.displayContacts(contactDetails);
                     break;
                 case 5:
-                    System.out.println("Exit!");
+                    System.out.println("exit");
                     break;
                 default:
                     System.out.println("Invalid option selected.");
@@ -196,13 +215,5 @@ public class AddressBooksystem {
             System.out.println("Do You Want To Perform more opration then Enter 1 else Enter 2");
             ans = scanner.nextInt();
         } while (ans == 1);
-    }
-
-    public static void main(String[] args) {
-        System.out.println("Welcome to Address Book Program!");
-
-        AddressBooksystem addressbooksystem = new AddressBooksystem();
-        System.out.println("-------------------------------");
-        AddressBook(addressbooksystem);
     }
 }
