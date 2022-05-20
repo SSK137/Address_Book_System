@@ -6,11 +6,12 @@ public class AddressBooksystem {
     static ArrayList<String> contactsDetails = new ArrayList();
     static Scanner scanner = new Scanner(System.in);
     static HashMap<String, ArrayList<Contacts>> hashmap = new HashMap<>();
+    /*Execution Of Program Starts from here*/
     public static void AddressBook(AddressBooksystem addressBooksystem) {
         System.out.println("choice");
         int choice;
         do {
-            System.out.println("\n1)Add Address Book \n2)Search Contact Details\n3)Sort By Name");
+            System.out.println("\n1)Add Address Book \n2)Search Contact Details\n3)Sort By Name\n4)Sort by City adn State Name\n5) Exit");
             choice=scanner.nextInt();
             switch (choice) {
                 case 1:
@@ -36,11 +37,14 @@ public class AddressBooksystem {
                 case 3:
                     SortByName(hashmap);
                     break;
+                case 4:
+                    SortByCityState(hashmap);
                 default:
                     System.out.println("Wrong Choice Entered");
             }
-        }while (choice<4);
+        }while (choice<5);
     }
+    /*----Method For Search Contact in Multiple address Books those who are belongs to Same City----*/
     public static void SearchInMultipleBook(String name){
         int CountFromAllAddressBook=0;
         for (Map.Entry<String, ArrayList<Contacts>> entry : hashmap.entrySet()){
@@ -59,13 +63,26 @@ public class AddressBooksystem {
         }
         System.out.println("\n Total Count From Same City 0r State in Single Address Book : "+CountFromAllAddressBook);
     }
+    /*----Method For Sort Contacts from address Books----*/
     public static void SortByName(HashMap<String, ArrayList<Contacts>> hashmap) {
         for (Map.Entry<String, ArrayList<Contacts>> addressBookMapEntry : hashmap.entrySet()) {
             List<Contacts> sortedContacts = addressBookMapEntry.getValue()
                     .stream()
-                    .sorted(Comparator.comparing(contactInfo -> contactInfo.getFirstName()))
+                    .sorted(Comparator.comparing(contact1 -> contact1.getFirstName()))
                     .toList();
             System.out.println("Sorted Contacts By Name : ");
+            for (Contacts contact : sortedContacts) {
+                System.out.println(contact.toString());
+            }
+        }
+    }
+    public static void SortByCityState(HashMap<String, ArrayList<Contacts>> hashmap) {
+        for (Map.Entry<String, ArrayList<Contacts>> addressBookMapEntry : hashmap.entrySet()) {
+            List<Contacts> sortedContacts = addressBookMapEntry.getValue()
+                    .stream()
+                    .sorted(Comparator.comparing(contact1 -> contact1.getCity() + contact1.getState()))
+                    .toList();
+            System.out.println("Sorted Contacts By City,State : ");
             for (Contacts contact : sortedContacts) {
                 System.out.println(contact.toString());
             }
@@ -239,9 +256,6 @@ public class AddressBooksystem {
                 case 5:
                     SearchInSingleBook(contactDetails);
                     break;
-                /*case 6:
-                    addressBooksystem.SortByName(hashmap);
-                    break;*/
                 default:
                     System.out.println("Invalid option selected.");
                     break;
