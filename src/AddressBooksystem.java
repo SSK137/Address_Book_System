@@ -1,5 +1,6 @@
 import java.util.*;
 import java.lang.*;
+import java.util.stream.Collectors;
 
 public class AddressBooksystem {
     static ArrayList<String> contactsDetails = new ArrayList();
@@ -7,39 +8,45 @@ public class AddressBooksystem {
     static HashMap<String, ArrayList<Contacts>> hashmap = new HashMap<>();
     public static void AddressBook(AddressBooksystem addressBooksystem) {
         System.out.println("choice");
-        System.out.println("1) Add Address Book \n2)Search");
-        int ch=scanner.nextInt();
-        switch (ch) {
-            case 1:
-            int ans;
-            do {
-                System.out.println("Enter Name of Address Book");
-                String AddressBookName = scanner.next();
-                contactsDetails.add(AddressBookName);
+        int choice;
+        do {
+            System.out.println("\n1)Add Address Book \n2)Search Contact Details\n3)Sort By Name");
+            choice=scanner.nextInt();
+            switch (choice) {
+                case 1:
+                        System.out.println("Enter Name of Address Book");
+                        String AddressBookName = scanner.next();
+                        contactsDetails.add(AddressBookName);
 
-                if (hashmap.containsKey(AddressBookName)) {
-                    System.out.println("The AddressBook already exist");
+                        if (hashmap.containsKey(AddressBookName)) {
+                            System.out.println("The AddressBook already exist");
+                            break;
+                        } else {
+                            ArrayList<Contacts> contactDetails = new ArrayList<>();
+                            addressBooksystem.MenuOption(addressBooksystem, contactDetails);
+                            hashmap.put(AddressBookName, contactDetails);
+                        }
+                        System.out.println("AddressBook Added" + hashmap + " ");
                     break;
-                } else {
-                    ArrayList<Contacts> contactDetails = new ArrayList<>();
-                    addressBooksystem.MenuOption(addressBooksystem, contactDetails);
-                    hashmap.put(AddressBookName, contactDetails);
-                }
-                System.out.println("AddressBook Added" + hashmap + " ");
-                System.out.println("1)Add New Address Book \n2)Search Contact by City or State \n3)Exit");
-                ans = scanner.nextInt();
-            } while (ans == 1);
-            case 2:
-                System.out.println("Enter name to search ");
-                String name=scanner.next();
-                SearchInMultipleBook(name);
-        }
+                case 2:
+                    System.out.println("Enter name to search ");
+                    String name = scanner.next();
+                    SearchInMultipleBook(name);
+                    break;
+                case 3:
+                    SortByName(hashmap);
+                    break;
+                default:
+                    System.out.println("Wrong Choice Entered");
+            }
+        }while (choice<4);
     }
-    public static List<Contacts> SearchInMultipleBook(String name){
+    public static void SearchInMultipleBook(String name){
         int CountFromAllAddressBook=0;
         for (Map.Entry<String, ArrayList<Contacts>> entry : hashmap.entrySet()){
             for (Contacts contacts1:entry.getValue()){
                 if (contacts1.getCity().equals(name)|| contacts1.getState().equals(name)){
+                    CountFromAllAddressBook+=1;
                     System.out.println("\nAddress Book Name :"+entry.getKey());
                     System.out.println("First Name :"+contacts1.getFirstName());
                     System.out.println("Last Name :"+contacts1.getLastName());
@@ -48,12 +55,21 @@ public class AddressBooksystem {
                     System.out.println("City Name :"+contacts1.getCity());
                     System.out.println("Contact Number :"+contacts1.getContactNo());
                 }
-                CountFromAllAddressBook+=1;
             }
         }
         System.out.println("\n Total Count From Same City 0r State in Single Address Book : "+CountFromAllAddressBook);
-        //System.out.printf("No record found:");
-        return null;
+    }
+    public static void SortByName(HashMap<String, ArrayList<Contacts>> hashmap) {
+        for (Map.Entry<String, ArrayList<Contacts>> addressBookMapEntry : hashmap.entrySet()) {
+            List<Contacts> sortedContacts = addressBookMapEntry.getValue()
+                    .stream()
+                    .sorted(Comparator.comparing(contactInfo -> contactInfo.getFirstName()))
+                    .toList();
+            System.out.println("Sorted Contacts By Name : ");
+            for (Contacts contact : sortedContacts) {
+                System.out.println(contact.toString());
+            }
+        }
     }
     public void SearchInSingleBook(ArrayList<Contacts> contactdetails){
         System.out.println("Enter name of city or state to search");
@@ -62,9 +78,8 @@ public class AddressBooksystem {
         for (Contacts contact:contactdetails){
             if(contact.getCity().equals(name)||contact.getState().equals(name))
             {
-                contacts.add(contact);
+                System.out.println(contact);
             }
-            System.out.println(contact);
         }
     }
 
@@ -201,7 +216,7 @@ public class AddressBooksystem {
         System.out.println("Enter a number to perform action: ");
         int menu, ans;
         do {
-            System.out.println(" \n1. Add details \n2. Edit details \n3. Delete details \n4. Display details \n5.Search in Perticular Book ");
+            System.out.println(" \n1. Add details \n2. Edit details \n3. Delete details \n4. Display details \n5.Search Contact in Perticular Book ");
             System.out.println("Enter Option");
             menu = scanner.nextInt();
             switch (menu) {
@@ -224,6 +239,9 @@ public class AddressBooksystem {
                 case 5:
                     SearchInSingleBook(contactDetails);
                     break;
+                /*case 6:
+                    addressBooksystem.SortByName(hashmap);
+                    break;*/
                 default:
                     System.out.println("Invalid option selected.");
                     break;
