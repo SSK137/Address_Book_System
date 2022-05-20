@@ -36,6 +36,7 @@ public class AddressBooksystem {
         }
     }
     public static List<Contacts> SearchInMultipleBook(String name){
+        int CountFromAllAddressBook=0;
         for (Map.Entry<String, ArrayList<Contacts>> entry : hashmap.entrySet()){
             for (Contacts contacts1:entry.getValue()){
                 if (contacts1.getCity().equals(name)|| contacts1.getState().equals(name)){
@@ -47,9 +48,11 @@ public class AddressBooksystem {
                     System.out.println("City Name :"+contacts1.getCity());
                     System.out.println("Contact Number :"+contacts1.getContactNo());
                 }
+                CountFromAllAddressBook+=1;
             }
         }
-        System.out.printf("No record found:");
+        System.out.println("\n Total Count From Same City 0r State in Single Address Book : "+CountFromAllAddressBook);
+        //System.out.printf("No record found:");
         return null;
     }
     public void SearchInSingleBook(ArrayList<Contacts> contactdetails){
